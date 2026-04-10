@@ -10,17 +10,16 @@
     --bg-primary: #ffffff;
     --bg-secondary: #f5f5f4;
     --bg-tertiary: #eeece8;
-    --bg-info: #e6f1fb;
     --text-primary: #1a1a18;
     --text-secondary: #5f5e5a;
     --text-tertiary: #888780;
-    --text-info: #185fa5;
     --border: rgba(0,0,0,0.12);
-    --border-md: rgba(0,0,0,0.2);
+    --border-md: rgba(0,0,0,0.22);
     --radius-md: 8px;
     --radius-lg: 12px;
     --blue: #185fa5;
     --blue-light: #e6f1fb;
+    --blue-border: #b5d4f4;
     --blue-text: #0c447c;
     --green: #3b6d11;
     --green-light: #eaf3de;
@@ -30,127 +29,133 @@
     --amber-text: #633806;
     --red: #a32d2d;
     --red-light: #fcebeb;
+    --red-border: #f7c1c1;
     --red-text: #791f1f;
     --gray-light: #d3d1c7;
     --gray-text: #444441;
+    --purple: #534ab7;
+    --purple-light: #eeedfe;
+    --purple-text: #3c3489;
   }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-tertiary); color: var(--text-primary); font-size: 13px; line-height: 1.5; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-
-  /* Topbar */
-  .topbar { background: var(--bg-primary); border-bottom: 0.5px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-  .topbar-back { font-size: 12px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; }
+  .topbar { background: var(--bg-primary); border-bottom: 0.5px solid var(--border); padding: 9px 20px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .topbar-back { font-size: 12px; color: var(--text-secondary); cursor: pointer; }
   .topbar-back:hover { color: var(--text-primary); }
   .divider-v { width: 1px; height: 16px; background: var(--border); }
   .topbar-title { font-size: 14px; font-weight: 500; }
   .topbar-sub { font-size: 11px; color: var(--text-secondary); }
   .ml-auto { margin-left: auto; }
-  .topbar-actions { display: flex; gap: 8px; }
-  .btn { font-size: 12px; padding: 6px 14px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: var(--bg-primary); color: var(--text-primary); cursor: pointer; font-family: inherit; }
+  .topbar-actions { display: flex; gap: 6px; align-items: center; }
+  .btn { font-size: 12px; padding: 6px 13px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: var(--bg-primary); color: var(--text-primary); cursor: pointer; font-family: inherit; white-space: nowrap; }
   .btn:hover { background: var(--bg-secondary); }
   .btn-primary { background: var(--blue); border-color: var(--blue); color: #e6f1fb; }
   .btn-primary:hover { background: #0c447c; }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-primary:disabled { opacity: 0.38; cursor: not-allowed; }
   .btn-sm { font-size: 11px; padding: 5px 10px; }
-
-  /* Layout */
+  .btn-xs { font-size: 10px; padding: 3px 8px; }
   .layout { display: flex; flex: 1; overflow: hidden; }
-
-  /* Sidebar */
-  .sidebar { width: 216px; min-width: 216px; background: var(--bg-primary); border-right: 0.5px solid var(--border); padding: 12px 0; overflow-y: auto; }
-  .sidebar-section { padding: 8px 14px 4px; font-size: 10px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .07em; }
+  .sidebar { width: 210px; min-width: 210px; background: var(--bg-primary); border-right: 0.5px solid var(--border); padding: 10px 0; overflow-y: auto; }
+  .sidebar-section { padding: 8px 14px 3px; font-size: 10px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .07em; }
   .sidebar-item { padding: 6px 14px; font-size: 12px; color: var(--text-secondary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-left: 2px solid transparent; }
   .sidebar-item:hover { background: var(--bg-secondary); }
   .sidebar-item.active { color: var(--blue); border-left: 2px solid var(--blue); background: var(--blue-light); }
   .sidebar-item.sub { padding-left: 24px; font-size: 11px; }
   .sidebar-hr { border: none; border-top: 0.5px solid var(--border); margin: 8px 0; }
-
-  /* Badges */
-  .badge { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 500; white-space: nowrap; }
+  .badge { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 500; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
   .badge-blue { background: #b5d4f4; color: var(--blue-text); }
   .badge-green { background: #c0dd97; color: var(--green-text); }
   .badge-amber { background: #fac775; color: var(--amber-text); }
   .badge-red { background: #f7c1c1; color: var(--red-text); }
   .badge-gray { background: var(--gray-light); color: var(--gray-text); }
-
-  /* Main */
-  .main { flex: 1; overflow-y: auto; padding: 20px 24px; }
-
-  /* Steps */
-  .step-indicator { display: flex; margin-bottom: 18px; border-radius: var(--radius-md); overflow: hidden; border: 0.5px solid var(--border); }
-  .step { flex: 1; text-align: center; font-size: 11px; padding: 8px 0; border-bottom: 2px solid transparent; color: var(--text-tertiary); background: var(--bg-primary); border-right: 0.5px solid var(--border); }
+  .badge-purple { background: #cecbf6; color: var(--purple-text); }
+  .main { flex: 1; overflow-y: auto; padding: 18px 22px; }
+  .step-indicator { display: flex; margin-bottom: 16px; border-radius: var(--radius-md); overflow: hidden; border: 0.5px solid var(--border); }
+  .step { flex: 1; text-align: center; font-size: 11px; padding: 7px 0; border-bottom: 2px solid transparent; color: var(--text-tertiary); background: var(--bg-primary); border-right: 0.5px solid var(--border); }
   .step:last-child { border-right: none; }
   .step.done { border-bottom-color: var(--green); color: var(--green); }
   .step.active { border-bottom-color: var(--blue); color: var(--blue); font-weight: 500; background: var(--blue-light); }
-
-  /* Stats */
-  .stats-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
-  .stat-card { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 12px 14px; }
-  .stat-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
-  .stat-val { font-size: 22px; font-weight: 500; }
-  .stat-val.blue { color: var(--blue); }
+  .stats-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
+  .stat-card { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 10px 13px; }
+  .stat-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; }
+  .stat-val { font-size: 20px; font-weight: 500; }
   .stat-val.green { color: var(--green); }
   .stat-val.amber { color: var(--amber); }
   .stat-val.red { color: var(--red); }
-
-  /* Toolbar */
-  .toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .toolbar { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; flex-wrap: wrap; }
   .toolbar-check { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); cursor: pointer; }
   .filter-pill { font-size: 11px; padding: 4px 10px; border-radius: 10px; border: 0.5px solid var(--border); background: var(--bg-primary); color: var(--text-secondary); cursor: pointer; }
   .filter-pill:hover { background: var(--bg-secondary); }
-  .filter-pill.active { background: var(--blue-light); border-color: #b5d4f4; color: var(--blue); }
-
-  /* Table */
+  .filter-pill.active { background: var(--blue-light); border-color: var(--blue-border); color: var(--blue); }
   .table-wrap { background: var(--bg-primary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
   table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
-  thead th { background: var(--bg-secondary); padding: 8px 12px; text-align: left; font-weight: 500; font-size: 11px; color: var(--text-secondary); border-bottom: 0.5px solid var(--border); }
+  thead th { background: var(--bg-secondary); padding: 7px 10px; text-align: left; font-weight: 500; font-size: 11px; color: var(--text-secondary); border-bottom: 0.5px solid var(--border); }
   tbody tr { border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background 0.1s; }
   tbody tr:hover { background: var(--bg-secondary); }
-  tbody tr:last-child { border-bottom: none; }
   tbody tr.selected { background: var(--blue-light); }
+  tbody tr.row-active { background: #eef4fb; outline: 1px solid var(--blue-border); }
+  tbody tr:last-child { border-bottom: none; }
   tbody tr.section-row { cursor: default; }
-  tbody tr.section-row:hover { background: var(--bg-secondary); }
-  td { padding: 9px 12px; vertical-align: middle; }
-  .tx-type { font-weight: 500; }
-  .tx-sub { font-size: 11px; color: var(--text-secondary); }
-  .prog-bar { height: 4px; background: var(--bg-secondary); border-radius: 2px; overflow: hidden; width: 80px; }
+  tbody tr.section-row:hover { background: transparent; }
+  td { padding: 8px 10px; vertical-align: middle; }
+  .tx-type { font-weight: 500; font-size: 12px; }
+  .tx-sub { font-size: 10px; color: var(--text-tertiary); margin-top: 1px; }
+  .prog-bar { height: 3px; background: var(--bg-secondary); border-radius: 2px; overflow: hidden; width: 70px; }
   .prog-fill { height: 100%; border-radius: 2px; }
-  .prog-blue { background: var(--blue); }
   .prog-green { background: var(--green); }
   .prog-amber { background: var(--amber); }
-  .section-cell { background: var(--bg-secondary); font-size: 11px; font-weight: 500; color: var(--text-secondary); padding: 5px 12px; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 4px; vertical-align: middle; }
+  .section-cell { background: var(--bg-secondary); font-size: 11px; font-weight: 500; color: var(--text-secondary); padding: 5px 10px; display: flex; justify-content: space-between; align-items: center; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 3px; vertical-align: middle; }
   .dot-green { background: var(--green); }
   .dot-amber { background: var(--amber); }
   .dot-red { background: var(--red); }
-  .link-fix { font-size: 11px; color: var(--blue); font-weight: 500; }
-  .action-icon { color: var(--text-tertiary); font-size: 12px; padding: 2px 4px; }
-  .col-check { width: 36px; }
-  .col-type { width: 160px; }
-  .col-obj { width: 150px; }
-  .col-org { width: 140px; }
-  .col-status { width: 120px; }
-  .col-progress { width: 120px; }
-  .col-action { width: 50px; text-align: right; }
-
-  /* Gap Panel */
-  .gap-panel { width: 300px; min-width: 300px; border-left: 0.5px solid var(--border); background: var(--bg-primary); padding: 16px; overflow-y: auto; }
-  .gap-panel h3 { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
-  .gap-panel .sub { font-size: 11px; color: var(--text-secondary); margin-bottom: 14px; }
-  .gap-item { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: 8px; }
-  .gap-item.has-error { border-color: #f7c1c1; }
-  .gap-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .gap-item-name { font-size: 12px; font-weight: 500; }
-  .gap-field { margin-bottom: 8px; }
-  .gap-field:last-child { margin-bottom: 0; }
-  .gap-field label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 3px; }
-  .gap-field input, .gap-field select { width: 100%; font-size: 11px; padding: 5px 8px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; }
-  .gap-field input.missing, .gap-field select.missing { border-color: #e24b4a; background: var(--red-light); }
-  .gap-hr { border: none; border-top: 0.5px solid var(--border); margin: 14px 0; }
-  .dep-item { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: 8px; }
-  .dep-sub { font-size: 10px; color: var(--text-tertiary); margin-bottom: 3px; }
-  .dep-name { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
-  .dep-detail { font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; }
-  .gap-actions { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+  .dot-purple { background: var(--purple); }
+  .link-fix { font-size: 11px; color: var(--blue); font-weight: 500; cursor: pointer; }
+  .action-btn { font-size: 10px; padding: 2px 7px; border-radius: 4px; border: 0.5px solid var(--border-md); background: var(--bg-primary); color: var(--text-secondary); cursor: pointer; font-family: inherit; }
+  .action-btn:hover { background: var(--bg-secondary); }
+  .col-seq { width: 30px; text-align: center; }
+  .col-check { width: 30px; }
+  .col-type { width: 150px; }
+  .col-obj { width: 138px; }
+  .col-org { width: 128px; }
+  .col-status { width: 112px; }
+  .col-progress { width: 105px; }
+  .col-action { width: 58px; text-align: right; }
+  .right-panel { width: 316px; min-width: 316px; border-left: 0.5px solid var(--border); background: var(--bg-primary); display: flex; flex-direction: column; overflow: hidden; }
+  .panel-tabs { display: flex; border-bottom: 0.5px solid var(--border); flex-shrink: 0; }
+  .panel-tab { flex: 1; padding: 9px 0; text-align: center; font-size: 11px; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; }
+  .panel-tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 500; }
+  .panel-body { flex: 1; overflow-y: auto; padding: 14px; }
+  .panel-section-label { font-size: 10px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; margin-top: 14px; }
+  .panel-section-label:first-child { margin-top: 0; }
+  .bp-card { border: 0.5px solid var(--border); border-radius: var(--radius-md); margin-bottom: 8px; overflow: hidden; }
+  .bp-card.has-gap { border-color: var(--red-border); }
+  .bp-card.is-open { border-color: var(--blue-border); }
+  .bp-card-header { padding: 9px 11px; display: flex; align-items: center; gap: 8px; cursor: pointer; background: var(--bg-primary); }
+  .bp-card-header:hover { background: var(--bg-secondary); }
+  .bp-seq { width: 20px; height: 20px; border-radius: 50%; background: var(--bg-secondary); font-size: 10px; font-weight: 500; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); flex-shrink: 0; }
+  .bp-seq.done { background: var(--green); color: #fff; }
+  .bp-card-name { font-size: 12px; font-weight: 500; flex: 1; }
+  .field-row { margin-bottom: 8px; }
+  .field-row label { font-size: 10px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; margin-bottom: 3px; }
+  .field-row label .req { color: var(--red); }
+  .field-row label .src { font-size: 9px; background: var(--bg-secondary); border-radius: 3px; padding: 1px 4px; color: var(--text-tertiary); }
+  .field-row input, .field-row select { width: 100%; font-size: 11px; padding: 5px 8px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; }
+  .field-row input.prefilled { background: var(--green-light); border-color: #c0dd97; color: var(--green-text); }
+  .field-row input.missing, .field-row select.missing { border-color: #e24b4a; background: var(--red-light); }
+  .field-row .field-hint { font-size: 10px; color: var(--text-tertiary); margin-top: 2px; }
+  .field-divider { border: none; border-top: 0.5px solid var(--border); margin: 10px 0; }
+  .prefilled-note { font-size: 10px; color: var(--green-text); background: var(--green-light); border-radius: 4px; padding: 5px 8px; margin-bottom: 10px; }
+  .blocked-note { font-size: 10px; color: var(--gray-text); background: #f1efe8; border-radius: 4px; padding: 5px 8px; margin-top: 6px; }
+  .dep-card { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 9px 11px; margin-bottom: 8px; }
+  .dep-card.has-gap { border-color: var(--red-border); }
+  .dep-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 3px; }
+  .dep-name { font-size: 12px; font-weight: 500; }
+  .dep-detail { font-size: 11px; color: var(--text-secondary); }
+  .dep-seq { font-size: 10px; color: var(--text-tertiary); margin-top: 3px; }
+  .panel-footer { padding: 10px 14px; border-top: 0.5px solid var(--border); display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+  .gap-count-note { font-size: 11px; color: var(--red); text-align: center; }
+  .toast { position: fixed; bottom: 20px; right: 20px; background: var(--text-primary); color: #fff; font-size: 12px; padding: 10px 16px; border-radius: var(--radius-md); opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 999; }
+  .toast.show { opacity: 1; }
 </style>
 </head>
 <body>
@@ -163,14 +168,13 @@
     <div class="topbar-sub">Scenario: Default · effective 01/01/2027</div>
   </div>
   <div class="ml-auto topbar-actions">
-    <button class="btn btn-sm">Edit</button>
-    <button class="btn btn-sm btn-primary">Execute selected</button>
+    <button class="btn btn-sm" onclick="showToast('Opened in edit mode')">Edit</button>
+    <button class="btn btn-sm" onclick="showToast('Preparing EIB export…')">Export to EIB</button>
+    <button class="btn btn-sm btn-primary" onclick="showToast('Execution initiated for selected transactions')">Execute selected</button>
   </div>
 </div>
 
 <div class="layout">
-
-  <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-section">Execution status</div>
     <div class="sidebar-item active">All changes <span class="badge badge-blue">119</span></div>
@@ -179,18 +183,15 @@
     <div class="sidebar-item">In progress <span class="badge badge-amber">29</span></div>
     <div class="sidebar-item">Completed <span class="badge badge-green">34</span></div>
     <div class="sidebar-hr"></div>
-    <div class="sidebar-section">Change type</div>
-    <div class="sidebar-item">Organization changes <span class="badge badge-gray">49</span></div>
-    <div class="sidebar-item sub">Created <span class="badge badge-gray">19</span></div>
-    <div class="sidebar-item sub">Edits <span class="badge badge-gray">20</span></div>
-    <div class="sidebar-item sub">Closed <span class="badge badge-gray">10</span></div>
-    <div class="sidebar-item">Position changes <span class="badge badge-gray">70</span></div>
-    <div class="sidebar-item sub">Created TBH <span class="badge badge-gray">49</span></div>
-    <div class="sidebar-item sub">Edits <span class="badge badge-gray">11</span></div>
-    <div class="sidebar-item sub">Closed <span class="badge badge-gray">10</span></div>
+    <div class="sidebar-section">Business process</div>
+    <div class="sidebar-item">Create organization <span class="badge badge-gray">19</span></div>
+    <div class="sidebar-item">Edit organization <span class="badge badge-gray">20</span></div>
+    <div class="sidebar-item">Create position <span class="badge badge-gray">49</span></div>
+    <div class="sidebar-item">Change job <span class="badge badge-gray">11</span></div>
+    <div class="sidebar-item">Change org assignment <span class="badge badge-gray">10</span></div>
+    <div class="sidebar-item">Close org / position <span class="badge badge-gray">10</span></div>
   </div>
 
-  <!-- Main -->
   <div class="main">
     <div class="step-indicator">
       <div class="step done">1 · Review transactions</div>
@@ -198,33 +199,30 @@
       <div class="step">3 · Confirm &amp; execute</div>
       <div class="step">4 · Monitor progress</div>
     </div>
-
     <div class="stats-row">
       <div class="stat-card"><div class="stat-label">Total transactions</div><div class="stat-val">119</div></div>
       <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-val green">34</div></div>
       <div class="stat-card"><div class="stat-label">In progress</div><div class="stat-val amber">29</div></div>
       <div class="stat-card"><div class="stat-label">Data gaps</div><div class="stat-val red">3</div></div>
     </div>
-
     <div class="toolbar">
       <label class="toolbar-check"><input type="checkbox"> Select all</label>
       <span class="filter-pill active">All</span>
       <span class="filter-pill">Orgs</span>
       <span class="filter-pill">Positions</span>
-      <span class="filter-pill">Errors only</span>
-      <label class="toolbar-check"><input type="checkbox"> Errors / incomplete only</label>
+      <span class="filter-pill">Gaps only</span>
       <div class="ml-auto" style="display:flex;gap:6px;">
-        <button class="btn btn-sm">Refresh</button>
-        <button class="btn btn-sm btn-primary">Execute selected</button>
+        <button class="btn btn-sm" onclick="showToast('Preparing EIB for selected rows…')">Export to EIB</button>
+        <button class="btn btn-sm btn-primary" onclick="showToast('Execution initiated')">Execute selected</button>
       </div>
     </div>
-
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
+            <th class="col-seq">#</th>
             <th class="col-check"></th>
-            <th class="col-type">Transaction type</th>
+            <th class="col-type">Transaction / BP</th>
             <th class="col-obj">Object name</th>
             <th class="col-org">Supervisory org</th>
             <th class="col-status">Status</th>
@@ -233,178 +231,316 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="section-row"><td colspan="7" class="section-cell">Organization changes — 49 total</td></tr>
-          <tr class="selected">
+          <tr class="section-row"><td colspan="8"><div class="section-cell">Organization changes — execute first <span class="badge badge-purple"><span class="dot dot-purple"></span>Priority 1</span></div></td></tr>
+          <tr>
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">1</td>
             <td><input type="checkbox" checked></td>
             <td><div class="tx-type">Create organization</div><div class="tx-sub">Supervisory org</div></td>
-            <td>R&amp;D Platform</td>
-            <td>Engineering</td>
+            <td>R&amp;D Platform</td><td>Engineering</td>
             <td><span class="badge badge-green"><span class="dot dot-green"></span>Completed</span></td>
             <td><div class="prog-bar"><div class="prog-fill prog-green" style="width:100%"></div></div></td>
-            <td><span class="action-icon">→</span></td>
+            <td><button class="action-btn">View</button></td>
+          </tr>
+          <tr id="row-mlo" onclick="openPanel('mlo')">
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">2</td>
+            <td><input type="checkbox" onclick="event.stopPropagation()"></td>
+            <td><div class="tx-type">Edit organization</div><div class="tx-sub">Move in hierarchy</div></td>
+            <td>ML Ops</td><td>R&amp;D Platform</td>
+            <td><span class="badge badge-red"><span class="dot dot-red"></span>Data gap</span></td>
+            <td><span class="link-fix">Fill fields →</span></td>
+            <td><button class="action-btn" onclick="event.stopPropagation();openPanel('mlo')">Fill</button></td>
           </tr>
           <tr>
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">3</td>
             <td><input type="checkbox"></td>
             <td><div class="tx-type">Edit organization</div><div class="tx-sub">Rename</div></td>
-            <td>Data Science</td>
-            <td>R&amp;D Platform</td>
+            <td>Data Science</td><td>R&amp;D Platform</td>
             <td><span class="badge badge-amber"><span class="dot dot-amber"></span>In progress</span></td>
             <td><div class="prog-bar"><div class="prog-fill prog-amber" style="width:55%"></div></div></td>
-            <td><span class="action-icon">→</span></td>
+            <td><button class="action-btn">View</button></td>
           </tr>
           <tr>
-            <td><input type="checkbox"></td>
-            <td><div class="tx-type">Edit organization</div><div class="tx-sub">Move in hierarchy</div></td>
-            <td>ML Ops</td>
-            <td>R&amp;D Platform</td>
-            <td><span class="badge badge-red"><span class="dot dot-red"></span>Data gap</span></td>
-            <td><span class="link-fix">Fix →</span></td>
-            <td><span class="action-icon">→</span></td>
-          </tr>
-          <tr>
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">4</td>
             <td><input type="checkbox"></td>
             <td><div class="tx-type">Close organization</div></td>
-            <td>Legacy Infra</td>
-            <td>Engineering</td>
+            <td>Legacy Infra</td><td>Engineering</td>
             <td><span class="badge badge-gray">Not started</span></td>
-            <td><div class="prog-bar"><div class="prog-fill prog-blue" style="width:0%"></div></div></td>
-            <td><span class="action-icon">→</span></td>
+            <td></td>
+            <td><button class="action-btn">View</button></td>
           </tr>
 
-          <tr class="section-row"><td colspan="7" class="section-cell">Position changes — created TBH (49)</td></tr>
+          <tr class="section-row"><td colspan="8"><div class="section-cell">Position changes — created TBH (49) <span class="badge badge-gray">Priority 2 · awaiting org completion</span></div></td></tr>
           <tr>
-            <td><input type="checkbox"></td>
-            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
-            <td>Sr. Data Analyst</td>
-            <td>R&amp;D Platform</td>
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">5</td>
+            <td><input type="checkbox" checked></td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH · BP</div></td>
+            <td>Sr. Data Analyst</td><td>R&amp;D Platform</td>
             <td><span class="badge badge-green"><span class="dot dot-green"></span>Completed</span></td>
             <td><div class="prog-bar"><div class="prog-fill prog-green" style="width:100%"></div></div></td>
-            <td><span class="action-icon">→</span></td>
+            <td><button class="action-btn">View</button></td>
+          </tr>
+          <tr id="row-staff" onclick="openPanel('staff')">
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">6</td>
+            <td><input type="checkbox" onclick="event.stopPropagation()"></td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH · BP</div></td>
+            <td>Staff Engineer</td><td>Engineering</td>
+            <td><span class="badge badge-red"><span class="dot dot-red"></span>Data gap</span></td>
+            <td><span class="link-fix">Fill fields →</span></td>
+            <td><button class="action-btn" onclick="event.stopPropagation();openPanel('staff')">Fill</button></td>
           </tr>
           <tr>
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">7</td>
             <td><input type="checkbox"></td>
-            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
-            <td>ML Engineer II</td>
-            <td>ML Ops</td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH · BP</div></td>
+            <td>ML Engineer II</td><td>ML Ops</td>
             <td><span class="badge badge-amber"><span class="dot dot-amber"></span>In progress</span></td>
             <td><div class="prog-bar"><div class="prog-fill prog-amber" style="width:30%"></div></div></td>
-            <td><span class="action-icon">→</span></td>
+            <td><button class="action-btn">View</button></td>
           </tr>
           <tr>
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">8</td>
             <td><input type="checkbox"></td>
-            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
-            <td>Staff Engineer</td>
-            <td>Engineering</td>
-            <td><span class="badge badge-red"><span class="dot dot-red"></span>Data gap</span></td>
-            <td><span class="link-fix">Fix →</span></td>
-            <td><span class="action-icon">→</span></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
-            <td>Product Designer</td>
-            <td>R&amp;D Platform</td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH · BP</div></td>
+            <td>Product Designer</td><td>R&amp;D Platform</td>
             <td><span class="badge badge-gray">Not started</span></td>
             <td></td>
-            <td><span class="action-icon">→</span></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
-            <td>Security Analyst</td>
-            <td>Engineering</td>
-            <td><span class="badge badge-gray">Not started</span></td>
-            <td></td>
-            <td><span class="action-icon">→</span></td>
+            <td><button class="action-btn">View</button></td>
           </tr>
 
-          <tr class="section-row"><td colspan="7" class="section-cell">Position changes — edits to existing (11)</td></tr>
+          <tr class="section-row"><td colspan="8"><div class="section-cell">Position changes — edits to existing (11) <span class="badge badge-gray">Priority 3</span></div></td></tr>
           <tr>
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">9</td>
             <td><input type="checkbox"></td>
             <td><div class="tx-type">Change job</div><div class="tx-sub">Org reassignment</div></td>
-            <td>POS 1</td>
-            <td>Engineering → R&amp;D</td>
+            <td>POS 1</td><td>Engineering → R&amp;D</td>
             <td><span class="badge badge-green"><span class="dot dot-green"></span>Completed</span></td>
             <td><div class="prog-bar"><div class="prog-fill prog-green" style="width:100%"></div></div></td>
-            <td><span class="action-icon">→</span></td>
+            <td><button class="action-btn">View</button></td>
           </tr>
           <tr>
+            <td style="text-align:center;color:var(--text-tertiary);font-size:10px;">10</td>
             <td><input type="checkbox"></td>
             <td><div class="tx-type">Change org assignment</div></td>
-            <td>POS 2</td>
-            <td>Engineering</td>
+            <td>POS 2</td><td>Engineering</td>
             <td><span class="badge badge-amber"><span class="dot dot-amber"></span>In progress</span></td>
             <td><div class="prog-bar"><div class="prog-fill prog-amber" style="width:70%"></div></div></td>
-            <td><span class="action-icon">→</span></td>
+            <td><button class="action-btn">View</button></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- Gap Panel -->
-  <div class="gap-panel">
-    <h3>Data gaps</h3>
-    <p class="sub">3 transactions have missing required fields. Resolve all before executing.</p>
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <div class="panel-tabs">
+      <div class="panel-tab active" onclick="switchTab('fields',this)">Required fields</div>
+      <div class="panel-tab" onclick="switchTab('deps',this)">Dependencies</div>
+      <div class="panel-tab" onclick="switchTab('export',this)">EIB / export</div>
+    </div>
 
-    <div class="gap-item has-error">
-      <div class="gap-item-header">
-        <span class="gap-item-name">ML Ops · Edit organization</span>
-        <span class="badge badge-red">1 gap</span>
+    <!-- Fields tab -->
+    <div class="panel-body" id="tab-fields">
+      <div id="panel-default">
+        <div style="padding:20px 0 16px;text-align:center;color:var(--text-tertiary);font-size:12px;">Click a row to fill required fields.</div>
+        <div class="panel-section-label">Gaps remaining — 3</div>
+        <div class="bp-card has-gap" onclick="openPanel('mlo')">
+          <div class="bp-card-header">
+            <div class="bp-seq" style="background:#f7c1c1;color:var(--red-text);">2</div>
+            <div style="flex:1"><div class="bp-card-name">ML Ops · Edit organization</div><div style="font-size:10px;color:var(--text-tertiary);">Primary location missing</div></div>
+            <span class="badge badge-red">1 gap</span>
+          </div>
+        </div>
+        <div class="bp-card has-gap" onclick="openPanel('staff')">
+          <div class="bp-card-header">
+            <div class="bp-seq" style="background:#f7c1c1;color:var(--red-text);">6</div>
+            <div style="flex:1"><div class="bp-card-name">Staff Engineer · Create position</div><div style="font-size:10px;color:var(--text-tertiary);">Worker type, Location missing</div></div>
+            <span class="badge badge-red">2 gaps</span>
+          </div>
+        </div>
       </div>
-      <div class="gap-field">
-        <label>Primary location *</label>
-        <select class="missing">
-          <option value="">— select —</option>
-          <option>San Francisco, CA</option>
-          <option>Chicago, IL</option>
-          <option>New York, NY</option>
-          <option>Boulder, CO</option>
-        </select>
+
+      <!-- ML Ops panel -->
+      <div id="panel-mlo" style="display:none;">
+        <div style="margin-bottom:10px;cursor:pointer;" onclick="backToDefault()"><span style="font-size:11px;color:var(--blue);">← All gaps</span></div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:2px;">ML Ops · Edit organization</div>
+        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:12px;">Move in hierarchy · Seq #2</div>
+        <div class="prefilled-note">Fields carried from ODSM model are pre-filled. Only missing required fields need input.</div>
+        <div class="panel-section-label">Pre-filled from model</div>
+        <div class="field-row"><label>Organization name <span class="src">from model</span></label><input type="text" class="prefilled" value="ML Ops" readonly></div>
+        <div class="field-row"><label>Reorganization reason <span class="src">from model</span></label><input type="text" class="prefilled" value="R&D Restructure 2027" readonly></div>
+        <div class="field-row"><label>Availability date <span class="src">from model</span></label><input type="text" class="prefilled" value="01/01/2027" readonly></div>
+        <hr class="field-divider">
+        <div class="panel-section-label">Required — needs input</div>
+        <div class="field-row">
+          <label>Primary location <span class="req">*</span></label>
+          <select class="missing" id="mlo-loc" onchange="checkGaps()">
+            <option value="">— select location —</option>
+            <option>San Francisco, CA</option><option>Chicago, IL</option><option>New York, NY</option><option>Boulder, CO</option><option>Remote</option>
+          </select>
+          <div class="field-hint">Required by Create Organization BP</div>
+        </div>
+      </div>
+
+      <!-- Staff Engineer panel -->
+      <div id="panel-staff" style="display:none;">
+        <div style="margin-bottom:10px;cursor:pointer;" onclick="backToDefault()"><span style="font-size:11px;color:var(--blue);">← All gaps</span></div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:2px;">Staff Engineer · Create position</div>
+        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:12px;">TBH · Create Position BP · Seq #6</div>
+        <div class="prefilled-note">Fields carried from ODSM model are pre-filled. Only missing required fields need input.</div>
+        <div class="panel-section-label">Pre-filled from model</div>
+        <div class="field-row"><label>Job posting title <span class="src">from model</span></label><input type="text" class="prefilled" value="Staff Engineer" readonly></div>
+        <div class="field-row"><label>Supervisory org <span class="src">from model</span></label><input type="text" class="prefilled" value="Engineering" readonly></div>
+        <div class="field-row"><label>Number of positions <span class="src">from model</span></label><input type="text" class="prefilled" value="1" readonly></div>
+        <div class="field-row"><label>Availability date <span class="src">from model</span></label><input type="text" class="prefilled" value="01/01/2027" readonly></div>
+        <div class="field-row"><label>Earliest hire date <span class="src">from model</span></label><input type="text" class="prefilled" value="01/01/2027" readonly></div>
+        <hr class="field-divider">
+        <div class="panel-section-label">Required — needs input</div>
+        <div class="field-row">
+          <label>Worker type <span class="req">*</span></label>
+          <select class="missing" id="staff-wt" onchange="checkGaps()">
+            <option value="">— select —</option><option>Full time</option><option>Part time</option><option>Contract</option>
+          </select>
+          <div class="field-hint">Required by Create Position BP</div>
+        </div>
+        <div class="field-row">
+          <label>Location <span class="req">*</span></label>
+          <select class="missing" id="staff-loc" onchange="checkGaps()">
+            <option value="">— select —</option><option>San Francisco, CA</option><option>Chicago, IL</option><option>Boulder, CO</option><option>Remote</option>
+          </select>
+          <div class="field-hint">Required by Create Position BP</div>
+        </div>
+        <hr class="field-divider">
+        <div class="panel-section-label">Optional — sub-BPs</div>
+        <div class="field-row">
+          <label>Compensation grade <span class="src">optional</span></label>
+          <select><option value="">— skip for now —</option><option>Grade 7</option><option>Grade 8</option><option>Grade 9</option></select>
+          <div class="field-hint">Triggers Request Default Compensation sub-BP if set</div>
+        </div>
       </div>
     </div>
 
-    <div class="gap-item has-error">
-      <div class="gap-item-header">
-        <span class="gap-item-name">Staff Engineer · Create position</span>
-        <span class="badge badge-red">2 gaps</span>
+    <!-- Dependencies tab -->
+    <div class="panel-body" id="tab-deps" style="display:none;">
+      <div class="panel-section-label">Execution order</div>
+      <p style="font-size:11px;color:var(--text-secondary);margin-bottom:12px;">Orgs auto-sequence before positions. Resolve org gaps to unblock downstream transactions.</p>
+      <div class="dep-card">
+        <div class="dep-card-top"><div class="dep-name">Create supervisory org</div><span class="badge badge-green">Done</span></div>
+        <div class="dep-detail">R&amp;D Platform · Seq #1</div>
+        <div class="dep-seq">Unblocks → Create position (×12)</div>
       </div>
-      <div class="gap-field">
-        <label>Worker type *</label>
-        <select class="missing">
-          <option value="">— select —</option>
-          <option>Full time</option>
-          <option>Part time</option>
-          <option>Contract</option>
-        </select>
+      <div class="dep-card has-gap">
+        <div class="dep-card-top"><div class="dep-name">Edit organization · ML Ops</div><span class="badge badge-red">Gap</span></div>
+        <div class="dep-detail">Seq #2 · Primary location missing</div>
+        <div class="dep-seq">Unblocks → Change org assignment (×3)</div>
+        <div class="blocked-note">⚠ 3 downstream transactions waiting on this</div>
       </div>
-      <div class="gap-field">
-        <label>Location *</label>
-        <input type="text" class="missing" placeholder="Enter location">
+      <div class="dep-card has-gap">
+        <div class="dep-card-top"><div class="dep-name">Staff Engineer · Create position</div><span class="badge badge-red">Gap</span></div>
+        <div class="dep-detail">Seq #6 · Worker type, Location missing</div>
+        <div class="dep-seq">No downstream dependencies</div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-card-top"><div class="dep-name">All Create position BPs</div><span class="badge badge-gray">Waiting</span></div>
+        <div class="dep-detail">Seq #5–53 · Blocked until org changes complete</div>
+        <div class="dep-seq">Depends on → Create org (Seq #1)</div>
       </div>
     </div>
 
-    <div class="gap-hr"></div>
-
-    <h3>Dependencies</h3>
-    <p class="sub" style="margin-bottom:10px;">Transactions that must complete before others can start.</p>
-
-    <div class="dep-item">
-      <div class="dep-sub">Dependency · will execute concurrently</div>
-      <div class="dep-name">Create supervisory org</div>
-      <div class="dep-detail">Must complete before: Create position (×12)</div>
-      <span style="font-size:11px;color:var(--blue);cursor:pointer;">Open →</span>
+    <!-- EIB / Export tab -->
+    <div class="panel-body" id="tab-export" style="display:none;">
+      <div class="panel-section-label">Export by business process</div>
+      <p style="font-size:11px;color:var(--text-secondary);margin-bottom:12px;">Pre-populated with all fields from the ODSM model. Missing fields will be highlighted in the downloaded file.</p>
+      <div class="bp-card">
+        <div class="bp-card-header" style="cursor:default;">
+          <div style="flex:1"><div class="bp-card-name">Create Organization EIB</div><div style="font-size:10px;color:var(--text-tertiary);">19 rows · 8 fields · 0 gaps</div></div>
+          <button class="btn btn-xs btn-primary" onclick="showToast('Downloading Create Organization EIB…')">Download</button>
+        </div>
+      </div>
+      <div class="bp-card has-gap">
+        <div class="bp-card-header" style="cursor:default;">
+          <div style="flex:1"><div class="bp-card-name">Create Position EIB</div><div style="font-size:10px;color:var(--text-tertiary);">49 rows · 12 fields · 3 gaps remain</div></div>
+          <button class="btn btn-xs" onclick="showToast('Downloaded — complete missing fields in spreadsheet')">Download</button>
+        </div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-card-header" style="cursor:default;">
+          <div style="flex:1"><div class="bp-card-name">Change Job EIB</div><div style="font-size:10px;color:var(--text-tertiary);">11 rows · 15 fields · 0 gaps</div></div>
+          <button class="btn btn-xs btn-primary" onclick="showToast('Downloading Change Job EIB…')">Download</button>
+        </div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-card-header" style="cursor:default;">
+          <div style="flex:1"><div class="bp-card-name">All transactions (combined)</div><div style="font-size:10px;color:var(--text-tertiary);">119 rows across all BPs</div></div>
+          <button class="btn btn-xs" onclick="showToast('Downloading full EIB package…')">Download all</button>
+        </div>
+      </div>
+      <hr class="field-divider">
+      <div class="panel-section-label">Or submit directly in Workday</div>
+      <p style="font-size:11px;color:var(--text-secondary);margin-bottom:10px;">Resolve all gaps in the Required fields tab, then initiate BPs directly from here.</p>
+      <button class="btn btn-sm btn-primary" id="confirm-btn" disabled style="width:100%;" onclick="showToast('Execution initiated for all ready transactions')">Confirm &amp; execute in Workday</button>
+      <div class="gap-count-note" id="gap-note" style="margin-top:6px;">3 gaps must be resolved first</div>
     </div>
 
-    <div class="gap-actions">
-      <button class="btn btn-sm btn-primary" disabled>Confirm &amp; execute (gaps remain)</button>
-      <button class="btn btn-sm">Export as CSV</button>
+    <div class="panel-footer">
+      <button class="btn btn-sm" style="width:100%;" onclick="showToast('Preparing full EIB export…')">Export to EIB</button>
+      <button class="btn btn-sm btn-primary" id="footer-exec" disabled style="width:100%;">Confirm &amp; execute (3 gaps remain)</button>
     </div>
   </div>
-
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+  function switchTab(name, el) {
+    document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    ['tab-fields','tab-deps','tab-export'].forEach(id => {
+      document.getElementById(id).style.display = (id === 'tab-' + name) ? 'block' : 'none';
+    });
+  }
+  function openPanel(id) {
+    document.getElementById('panel-default').style.display = 'none';
+    document.getElementById('panel-mlo').style.display = 'none';
+    document.getElementById('panel-staff').style.display = 'none';
+    document.getElementById('panel-' + id).style.display = 'block';
+    document.querySelectorAll('.panel-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+    ['tab-fields','tab-deps','tab-export'].forEach((tid,i) => {
+      document.getElementById(tid).style.display = i===0 ? 'block' : 'none';
+    });
+    document.querySelectorAll('tbody tr').forEach(r => r.classList.remove('row-active'));
+    const row = document.getElementById('row-' + id);
+    if (row) row.classList.add('row-active');
+  }
+  function backToDefault() {
+    document.getElementById('panel-default').style.display = 'block';
+    document.getElementById('panel-mlo').style.display = 'none';
+    document.getElementById('panel-staff').style.display = 'none';
+    document.querySelectorAll('tbody tr').forEach(r => r.classList.remove('row-active'));
+  }
+  function checkGaps() {
+    const gaps = document.querySelectorAll('.missing').length;
+    const footerBtn = document.getElementById('footer-exec');
+    const confirmBtn = document.getElementById('confirm-btn');
+    const gapNote = document.getElementById('gap-note');
+    if (gaps === 0) {
+      footerBtn.disabled = false;
+      footerBtn.textContent = 'Confirm & execute — ready';
+      if (confirmBtn) confirmBtn.disabled = false;
+      if (gapNote) gapNote.style.display = 'none';
+    } else {
+      footerBtn.disabled = true;
+      footerBtn.textContent = `Confirm & execute (${gaps} gap${gaps>1?'s':''} remain)`;
+      if (confirmBtn) confirmBtn.disabled = true;
+      if (gapNote) { gapNote.style.display='block'; gapNote.textContent=`${gaps} gap${gaps>1?'s':''} must be resolved first`; }
+    }
+  }
   document.querySelectorAll('.sidebar-item').forEach(item => {
     item.addEventListener('click', function() {
       document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
@@ -415,22 +551,6 @@
     pill.addEventListener('click', function() {
       document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
       this.classList.add('active');
-    });
-  });
-  document.querySelectorAll('.gap-field select, .gap-field input').forEach(el => {
-    el.addEventListener('change', function() {
-      if (this.value) this.classList.remove('missing');
-      else this.classList.add('missing');
-      const remaining = document.querySelectorAll('.missing').length;
-      const btn = document.querySelector('.btn-primary[disabled]');
-      if (btn) {
-        if (remaining === 0) {
-          btn.disabled = false;
-          btn.textContent = 'Confirm & execute';
-        } else {
-          btn.textContent = `Confirm & execute (${remaining} gap${remaining > 1 ? 's' : ''} remain)`;
-        }
-      }
     });
   });
 </script>
