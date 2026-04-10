@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ODSM Execution · R&D Restructure</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f4;
+    --bg-tertiary: #eeece8;
+    --bg-info: #e6f1fb;
+    --text-primary: #1a1a18;
+    --text-secondary: #5f5e5a;
+    --text-tertiary: #888780;
+    --text-info: #185fa5;
+    --border: rgba(0,0,0,0.12);
+    --border-md: rgba(0,0,0,0.2);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --blue: #185fa5;
+    --blue-light: #e6f1fb;
+    --blue-text: #0c447c;
+    --green: #3b6d11;
+    --green-light: #eaf3de;
+    --green-text: #27500a;
+    --amber: #854f0b;
+    --amber-light: #faeeda;
+    --amber-text: #633806;
+    --red: #a32d2d;
+    --red-light: #fcebeb;
+    --red-text: #791f1f;
+    --gray-light: #d3d1c7;
+    --gray-text: #444441;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-tertiary); color: var(--text-primary); font-size: 13px; line-height: 1.5; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+  /* Topbar */
+  .topbar { background: var(--bg-primary); border-bottom: 0.5px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .topbar-back { font-size: 12px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; }
+  .topbar-back:hover { color: var(--text-primary); }
+  .divider-v { width: 1px; height: 16px; background: var(--border); }
+  .topbar-title { font-size: 14px; font-weight: 500; }
+  .topbar-sub { font-size: 11px; color: var(--text-secondary); }
+  .ml-auto { margin-left: auto; }
+  .topbar-actions { display: flex; gap: 8px; }
+  .btn { font-size: 12px; padding: 6px 14px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: var(--bg-primary); color: var(--text-primary); cursor: pointer; font-family: inherit; }
+  .btn:hover { background: var(--bg-secondary); }
+  .btn-primary { background: var(--blue); border-color: var(--blue); color: #e6f1fb; }
+  .btn-primary:hover { background: #0c447c; }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-sm { font-size: 11px; padding: 5px 10px; }
+
+  /* Layout */
+  .layout { display: flex; flex: 1; overflow: hidden; }
+
+  /* Sidebar */
+  .sidebar { width: 216px; min-width: 216px; background: var(--bg-primary); border-right: 0.5px solid var(--border); padding: 12px 0; overflow-y: auto; }
+  .sidebar-section { padding: 8px 14px 4px; font-size: 10px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .07em; }
+  .sidebar-item { padding: 6px 14px; font-size: 12px; color: var(--text-secondary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-left: 2px solid transparent; }
+  .sidebar-item:hover { background: var(--bg-secondary); }
+  .sidebar-item.active { color: var(--blue); border-left: 2px solid var(--blue); background: var(--blue-light); }
+  .sidebar-item.sub { padding-left: 24px; font-size: 11px; }
+  .sidebar-hr { border: none; border-top: 0.5px solid var(--border); margin: 8px 0; }
+
+  /* Badges */
+  .badge { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 500; white-space: nowrap; }
+  .badge-blue { background: #b5d4f4; color: var(--blue-text); }
+  .badge-green { background: #c0dd97; color: var(--green-text); }
+  .badge-amber { background: #fac775; color: var(--amber-text); }
+  .badge-red { background: #f7c1c1; color: var(--red-text); }
+  .badge-gray { background: var(--gray-light); color: var(--gray-text); }
+
+  /* Main */
+  .main { flex: 1; overflow-y: auto; padding: 20px 24px; }
+
+  /* Steps */
+  .step-indicator { display: flex; margin-bottom: 18px; border-radius: var(--radius-md); overflow: hidden; border: 0.5px solid var(--border); }
+  .step { flex: 1; text-align: center; font-size: 11px; padding: 8px 0; border-bottom: 2px solid transparent; color: var(--text-tertiary); background: var(--bg-primary); border-right: 0.5px solid var(--border); }
+  .step:last-child { border-right: none; }
+  .step.done { border-bottom-color: var(--green); color: var(--green); }
+  .step.active { border-bottom-color: var(--blue); color: var(--blue); font-weight: 500; background: var(--blue-light); }
+
+  /* Stats */
+  .stats-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .stat-card { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 12px 14px; }
+  .stat-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
+  .stat-val { font-size: 22px; font-weight: 500; }
+  .stat-val.blue { color: var(--blue); }
+  .stat-val.green { color: var(--green); }
+  .stat-val.amber { color: var(--amber); }
+  .stat-val.red { color: var(--red); }
+
+  /* Toolbar */
+  .toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .toolbar-check { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); cursor: pointer; }
+  .filter-pill { font-size: 11px; padding: 4px 10px; border-radius: 10px; border: 0.5px solid var(--border); background: var(--bg-primary); color: var(--text-secondary); cursor: pointer; }
+  .filter-pill:hover { background: var(--bg-secondary); }
+  .filter-pill.active { background: var(--blue-light); border-color: #b5d4f4; color: var(--blue); }
+
+  /* Table */
+  .table-wrap { background: var(--bg-primary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
+  thead th { background: var(--bg-secondary); padding: 8px 12px; text-align: left; font-weight: 500; font-size: 11px; color: var(--text-secondary); border-bottom: 0.5px solid var(--border); }
+  tbody tr { border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background 0.1s; }
+  tbody tr:hover { background: var(--bg-secondary); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.selected { background: var(--blue-light); }
+  tbody tr.section-row { cursor: default; }
+  tbody tr.section-row:hover { background: var(--bg-secondary); }
+  td { padding: 9px 12px; vertical-align: middle; }
+  .tx-type { font-weight: 500; }
+  .tx-sub { font-size: 11px; color: var(--text-secondary); }
+  .prog-bar { height: 4px; background: var(--bg-secondary); border-radius: 2px; overflow: hidden; width: 80px; }
+  .prog-fill { height: 100%; border-radius: 2px; }
+  .prog-blue { background: var(--blue); }
+  .prog-green { background: var(--green); }
+  .prog-amber { background: var(--amber); }
+  .section-cell { background: var(--bg-secondary); font-size: 11px; font-weight: 500; color: var(--text-secondary); padding: 5px 12px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 4px; vertical-align: middle; }
+  .dot-green { background: var(--green); }
+  .dot-amber { background: var(--amber); }
+  .dot-red { background: var(--red); }
+  .link-fix { font-size: 11px; color: var(--blue); font-weight: 500; }
+  .action-icon { color: var(--text-tertiary); font-size: 12px; padding: 2px 4px; }
+  .col-check { width: 36px; }
+  .col-type { width: 160px; }
+  .col-obj { width: 150px; }
+  .col-org { width: 140px; }
+  .col-status { width: 120px; }
+  .col-progress { width: 120px; }
+  .col-action { width: 50px; text-align: right; }
+
+  /* Gap Panel */
+  .gap-panel { width: 300px; min-width: 300px; border-left: 0.5px solid var(--border); background: var(--bg-primary); padding: 16px; overflow-y: auto; }
+  .gap-panel h3 { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .gap-panel .sub { font-size: 11px; color: var(--text-secondary); margin-bottom: 14px; }
+  .gap-item { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: 8px; }
+  .gap-item.has-error { border-color: #f7c1c1; }
+  .gap-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .gap-item-name { font-size: 12px; font-weight: 500; }
+  .gap-field { margin-bottom: 8px; }
+  .gap-field:last-child { margin-bottom: 0; }
+  .gap-field label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 3px; }
+  .gap-field input, .gap-field select { width: 100%; font-size: 11px; padding: 5px 8px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: var(--bg-primary); color: var(--text-primary); font-family: inherit; }
+  .gap-field input.missing, .gap-field select.missing { border-color: #e24b4a; background: var(--red-light); }
+  .gap-hr { border: none; border-top: 0.5px solid var(--border); margin: 14px 0; }
+  .dep-item { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: 8px; }
+  .dep-sub { font-size: 10px; color: var(--text-tertiary); margin-bottom: 3px; }
+  .dep-name { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
+  .dep-detail { font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; }
+  .gap-actions { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-back">← Org models</div>
+  <div class="divider-v"></div>
+  <div>
+    <div class="topbar-title">Execution: R&amp;D Restructure</div>
+    <div class="topbar-sub">Scenario: Default · effective 01/01/2027</div>
+  </div>
+  <div class="ml-auto topbar-actions">
+    <button class="btn btn-sm">Edit</button>
+    <button class="btn btn-sm btn-primary">Execute selected</button>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section">Execution status</div>
+    <div class="sidebar-item active">All changes <span class="badge badge-blue">119</span></div>
+    <div class="sidebar-item">Errors only <span class="badge badge-red">3</span></div>
+    <div class="sidebar-item">Not started <span class="badge badge-gray">53</span></div>
+    <div class="sidebar-item">In progress <span class="badge badge-amber">29</span></div>
+    <div class="sidebar-item">Completed <span class="badge badge-green">34</span></div>
+    <div class="sidebar-hr"></div>
+    <div class="sidebar-section">Change type</div>
+    <div class="sidebar-item">Organization changes <span class="badge badge-gray">49</span></div>
+    <div class="sidebar-item sub">Created <span class="badge badge-gray">19</span></div>
+    <div class="sidebar-item sub">Edits <span class="badge badge-gray">20</span></div>
+    <div class="sidebar-item sub">Closed <span class="badge badge-gray">10</span></div>
+    <div class="sidebar-item">Position changes <span class="badge badge-gray">70</span></div>
+    <div class="sidebar-item sub">Created TBH <span class="badge badge-gray">49</span></div>
+    <div class="sidebar-item sub">Edits <span class="badge badge-gray">11</span></div>
+    <div class="sidebar-item sub">Closed <span class="badge badge-gray">10</span></div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="step-indicator">
+      <div class="step done">1 · Review transactions</div>
+      <div class="step active">2 · Resolve data gaps</div>
+      <div class="step">3 · Confirm &amp; execute</div>
+      <div class="step">4 · Monitor progress</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-label">Total transactions</div><div class="stat-val">119</div></div>
+      <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-val green">34</div></div>
+      <div class="stat-card"><div class="stat-label">In progress</div><div class="stat-val amber">29</div></div>
+      <div class="stat-card"><div class="stat-label">Data gaps</div><div class="stat-val red">3</div></div>
+    </div>
+
+    <div class="toolbar">
+      <label class="toolbar-check"><input type="checkbox"> Select all</label>
+      <span class="filter-pill active">All</span>
+      <span class="filter-pill">Orgs</span>
+      <span class="filter-pill">Positions</span>
+      <span class="filter-pill">Errors only</span>
+      <label class="toolbar-check"><input type="checkbox"> Errors / incomplete only</label>
+      <div class="ml-auto" style="display:flex;gap:6px;">
+        <button class="btn btn-sm">Refresh</button>
+        <button class="btn btn-sm btn-primary">Execute selected</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-check"></th>
+            <th class="col-type">Transaction type</th>
+            <th class="col-obj">Object name</th>
+            <th class="col-org">Supervisory org</th>
+            <th class="col-status">Status</th>
+            <th class="col-progress">Progress</th>
+            <th class="col-action"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="section-row"><td colspan="7" class="section-cell">Organization changes — 49 total</td></tr>
+          <tr class="selected">
+            <td><input type="checkbox" checked></td>
+            <td><div class="tx-type">Create organization</div><div class="tx-sub">Supervisory org</div></td>
+            <td>R&amp;D Platform</td>
+            <td>Engineering</td>
+            <td><span class="badge badge-green"><span class="dot dot-green"></span>Completed</span></td>
+            <td><div class="prog-bar"><div class="prog-fill prog-green" style="width:100%"></div></div></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Edit organization</div><div class="tx-sub">Rename</div></td>
+            <td>Data Science</td>
+            <td>R&amp;D Platform</td>
+            <td><span class="badge badge-amber"><span class="dot dot-amber"></span>In progress</span></td>
+            <td><div class="prog-bar"><div class="prog-fill prog-amber" style="width:55%"></div></div></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Edit organization</div><div class="tx-sub">Move in hierarchy</div></td>
+            <td>ML Ops</td>
+            <td>R&amp;D Platform</td>
+            <td><span class="badge badge-red"><span class="dot dot-red"></span>Data gap</span></td>
+            <td><span class="link-fix">Fix →</span></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Close organization</div></td>
+            <td>Legacy Infra</td>
+            <td>Engineering</td>
+            <td><span class="badge badge-gray">Not started</span></td>
+            <td><div class="prog-bar"><div class="prog-fill prog-blue" style="width:0%"></div></div></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+
+          <tr class="section-row"><td colspan="7" class="section-cell">Position changes — created TBH (49)</td></tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
+            <td>Sr. Data Analyst</td>
+            <td>R&amp;D Platform</td>
+            <td><span class="badge badge-green"><span class="dot dot-green"></span>Completed</span></td>
+            <td><div class="prog-bar"><div class="prog-fill prog-green" style="width:100%"></div></div></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
+            <td>ML Engineer II</td>
+            <td>ML Ops</td>
+            <td><span class="badge badge-amber"><span class="dot dot-amber"></span>In progress</span></td>
+            <td><div class="prog-bar"><div class="prog-fill prog-amber" style="width:30%"></div></div></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
+            <td>Staff Engineer</td>
+            <td>Engineering</td>
+            <td><span class="badge badge-red"><span class="dot dot-red"></span>Data gap</span></td>
+            <td><span class="link-fix">Fix →</span></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
+            <td>Product Designer</td>
+            <td>R&amp;D Platform</td>
+            <td><span class="badge badge-gray">Not started</span></td>
+            <td></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Create position</div><div class="tx-sub">TBH</div></td>
+            <td>Security Analyst</td>
+            <td>Engineering</td>
+            <td><span class="badge badge-gray">Not started</span></td>
+            <td></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+
+          <tr class="section-row"><td colspan="7" class="section-cell">Position changes — edits to existing (11)</td></tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Change job</div><div class="tx-sub">Org reassignment</div></td>
+            <td>POS 1</td>
+            <td>Engineering → R&amp;D</td>
+            <td><span class="badge badge-green"><span class="dot dot-green"></span>Completed</span></td>
+            <td><div class="prog-bar"><div class="prog-fill prog-green" style="width:100%"></div></div></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td><div class="tx-type">Change org assignment</div></td>
+            <td>POS 2</td>
+            <td>Engineering</td>
+            <td><span class="badge badge-amber"><span class="dot dot-amber"></span>In progress</span></td>
+            <td><div class="prog-bar"><div class="prog-fill prog-amber" style="width:70%"></div></div></td>
+            <td><span class="action-icon">→</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Gap Panel -->
+  <div class="gap-panel">
+    <h3>Data gaps</h3>
+    <p class="sub">3 transactions have missing required fields. Resolve all before executing.</p>
+
+    <div class="gap-item has-error">
+      <div class="gap-item-header">
+        <span class="gap-item-name">ML Ops · Edit organization</span>
+        <span class="badge badge-red">1 gap</span>
+      </div>
+      <div class="gap-field">
+        <label>Primary location *</label>
+        <select class="missing">
+          <option value="">— select —</option>
+          <option>San Francisco, CA</option>
+          <option>Chicago, IL</option>
+          <option>New York, NY</option>
+          <option>Boulder, CO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="gap-item has-error">
+      <div class="gap-item-header">
+        <span class="gap-item-name">Staff Engineer · Create position</span>
+        <span class="badge badge-red">2 gaps</span>
+      </div>
+      <div class="gap-field">
+        <label>Worker type *</label>
+        <select class="missing">
+          <option value="">— select —</option>
+          <option>Full time</option>
+          <option>Part time</option>
+          <option>Contract</option>
+        </select>
+      </div>
+      <div class="gap-field">
+        <label>Location *</label>
+        <input type="text" class="missing" placeholder="Enter location">
+      </div>
+    </div>
+
+    <div class="gap-hr"></div>
+
+    <h3>Dependencies</h3>
+    <p class="sub" style="margin-bottom:10px;">Transactions that must complete before others can start.</p>
+
+    <div class="dep-item">
+      <div class="dep-sub">Dependency · will execute concurrently</div>
+      <div class="dep-name">Create supervisory org</div>
+      <div class="dep-detail">Must complete before: Create position (×12)</div>
+      <span style="font-size:11px;color:var(--blue);cursor:pointer;">Open →</span>
+    </div>
+
+    <div class="gap-actions">
+      <button class="btn btn-sm btn-primary" disabled>Confirm &amp; execute (gaps remain)</button>
+      <button class="btn btn-sm">Export as CSV</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', function() {
+      document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', function() {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.gap-field select, .gap-field input').forEach(el => {
+    el.addEventListener('change', function() {
+      if (this.value) this.classList.remove('missing');
+      else this.classList.add('missing');
+      const remaining = document.querySelectorAll('.missing').length;
+      const btn = document.querySelector('.btn-primary[disabled]');
+      if (btn) {
+        if (remaining === 0) {
+          btn.disabled = false;
+          btn.textContent = 'Confirm & execute';
+        } else {
+          btn.textContent = `Confirm & execute (${remaining} gap${remaining > 1 ? 's' : ''} remain)`;
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>
